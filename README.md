@@ -1,35 +1,24 @@
 # Spotidown — Android
 
-Aplikasi Android (Kotlin + Jetpack Compose) untuk mengunduh lagu Spotify sebagai MP3 lewat [spotidown.app](https://spotidown.app/). Versi mobile dari [ferrymehdi/spotidown](https://github.com/ferrymehdi/spotidown), berjalan mandiri di perangkat tanpa server pendamping.
+Aplikasi Android (Kotlin + Jetpack Compose) untuk mengunduh lagu menjadi MP3 dan memutarnya langsung sebagai pemutar musik lokal dengan dukungan lirik sinkron.
 
 ## Unduh APK
 
-Unduh berkas APK rilis terbaru langsung dari halaman **[Releases](https://github.com/ICR-1/spotidown/releases/latest)** (bagian kanan repositori ini).
+Unduh berkas APK rilis terbaru langsung dari halaman **[Releases](https://github.com/ICR-1/spotidown/releases/latest)** di panel kanan repositori ini.
 
-- **Versi:** `1.0`
+- **Versi:** `1.1`
 - **Minimum OS:** Android 10 (API 29) atau lebih baru
 
-## Cara Kerja
+## Fitur Utama
 
-Versi web/desktop asli memakai Puppeteer. Di Android peran itu dijalankan oleh **WebView 1×1 dp** yang memuat halaman `spotidown.app` lalu menjalankan skripnya secara same-origin:
-
-```text
-grecaptcha.execute() → POST /action → form per lagu (data/base/token)
-                     → POST /action/track → https://rapid.spotidown.app/v2?token=…
-                     → stream ke MediaStore Music/Spotidown
-```
-
-Parsing HTML dilakukan di dalam WebView dengan `DOMParser` (selektor semantik).
-
-## Fitur
-
-- Cari lagu berdasarkan judul, atau tempel link / URI / ID track Spotify.
-- Progres unduh per lagu (cincin persentase), penamaan otomatis `Artis - Judul.mp3`.
-- Metadata (judul, artis, album, durasi) ditulis ke MediaStore; berkas tersimpan di `Music/Spotidown`.
-- Tab **Unduhan**: putar/jeda, bagikan, dan hapus lagu yang sudah diunduh.
-- Menerima share teks langsung dari aplikasi lain (misalnya tombol Bagikan dari aplikasi Spotify).
-- Tanpa akun, tanpa API key, tanpa izin penyimpanan tambahan (Scoped Storage API 29+).
+- **Cari & Unduh MP3:** Cari lagu berdasarkan judul atau tempel tautan / URI / ID lagu Spotify langsung dari clipboard atau menu Bagikan (*Share*) aplikasi lain.
+- **Metadata & Sampul Otomatis:** Progres unduh per lagu, penamaan berkas otomatis `Artis - Judul.mp3`, serta penanaman tag ID3 (judul, artis, album, sampul album, dan lirik) ke folder `Music/Spotidown`.
+- **Perpustakaan Musik:** Tampilan grid dengan sampul album; ketuk untuk memutar, tekan lama untuk membagikan atau menghapus berkas.
+- **Pemutar Latar Belakang:** Didukung Media3/ExoPlayer dan `MediaSessionService` dengan kontrol penuh di notifikasi serta *lock screen*.
+- **Layar Now Playing:** Sampul berlatar blur, *seek bar*, *shuffle* dan *repeat*, serta *mini player* persisten saat menjelajah aplikasi.
+- **Lirik Sinkron:** Lirik diambil dari [LRCLIB](https://lrclib.net) (gratis, tanpa API key) dengan sorotan baris aktif dan gulir otomatis—ketuk baris lirik untuk melompat ke bagian lagu tersebut, serta disematkan di tag `USLT`.
+- **Ringan & Privat:** Tanpa login akun, tanpa API key, dan tanpa izin penyimpanan tambahan (Scoped Storage Android 10+).
 
 ## Catatan
 
-Aplikasi hanya mengambil tautan yang disediakan oleh `spotidown.app`; tidak ada bypass reCAPTCHA karena permintaan dikirim dari halaman aslinya. Gunakan hanya untuk konten yang berhak kamu unduh, serta patuhi Ketentuan Layanan Spotify dan hukum yang berlaku.
+Pemutaran musik dibatasi pada berkas lokal hasil unduhan di folder `Music/Spotidown` (tanpa *streaming*). Gunakan aplikasi ini hanya untuk konten yang berhak kamu unduh serta patuhi ketentuan layanan dan hukum yang berlaku.
